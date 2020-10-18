@@ -1,0 +1,24 @@
+#include "get_next_line.h"
+
+int main(void)
+{
+	int fd = open("../test_files_GNL/test_file17", O_RDONLY);
+	int size = 10;
+	int i = 0;
+	char **dst = malloc(sizeof(char*) * size);
+
+	while (i < size)
+	{
+		printf("ret = %d", get_next_line(fd, &dst[i]));
+		printf("|%s|\n", dst[i]);
+		i++;
+	}
+	i = 0;
+	while (i < size)
+	{
+		free(dst[i]);
+		i++;
+	}
+	close(fd);
+	return (0);
+}
