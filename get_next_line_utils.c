@@ -6,7 +6,7 @@
 /*   By: adeburea <adeburea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 15:04:36 by adeburea          #+#    #+#             */
-/*   Updated: 2020/10/13 20:10:06 by adeburea         ###   ########.fr       */
+/*   Updated: 2020/10/18 20:08:56 by adeburea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,27 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strncpy(char *dst, char *src, size_t n)
 {
-	int i;
+	size_t i;
 
 	i = 0;
-	while (s[i])
+	while (i < n && src[i])
 	{
-		if ((unsigned char)s[i] == (unsigned char)c)
-			return ((char*)&s[i]);
+		dst[i] = src[i];
 		i++;
 	}
-	return ((c == '\0') ? (char*)&s[i] : NULL);
+	while (i < n)
+	{
+		dst[i] = '\0';
+		i++;
+	}
+	return (dst);
 }
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	size_t	i;
+	size_t i;
 
 	i = 0;
 	if (!dst || !src)
@@ -55,27 +59,11 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	return (ft_strlen(src));
 }
 
-char	*ft_strdup(const char *s1)
+char	*ft_strndup(const char *s1, size_t n)
 {
 	char	*dst;
-	size_t	len;
 
-	len = ft_strlen(s1) + 1;
-	dst = malloc(len);
-	if (ft_strlcpy(dst, s1, len) == len - 1)
-		return (dst);
-	free(dst);
-	return (NULL);
-}
-
-char	*ft_substr(const char *s, unsigned int start, size_t len)
-{
-	char *dst;
-
-	while (start-- && *s)
-		s++;
-	if (!(dst = (char*)malloc(sizeof(char) * len + 1)))
-		return (NULL);
-	ft_strlcpy(dst, s, len + 1);
+	dst = malloc(++n);
+	ft_strlcpy(dst, s1, n);
 	return (dst);
 }

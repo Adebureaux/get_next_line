@@ -2,8 +2,8 @@
 
 int main(void)
 {
-	int fd = open("../test_files_GNL/test_file17", O_RDONLY);
-	int size = 10;
+	int fd = open("/dev/null", O_RDONLY);
+	int size = 1;
 	int i = 0;
 	char **dst = malloc(sizeof(char*) * size);
 
