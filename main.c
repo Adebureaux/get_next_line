@@ -3,13 +3,15 @@
 int main(void)
 {
 	int fd = open("/dev/null", O_RDONLY);
-	int size = 1;
+	int size = 100;
 	int i = 0;
+	int ret = 1;
 	char **dst = malloc(sizeof(char*) * size);
 
-	while (i < size)
+	while (i < size && ret > 0)
 	{
-		printf("ret = %d", get_next_line(fd, &dst[i]));
+		ret = get_next_line(fd, &dst[i]);
+		printf("ret = %d", ret);
 		printf("|%s|\n", dst[i]);
 		i++;
 	}
@@ -19,6 +21,12 @@ int main(void)
 		free(dst[i]);
 		i++;
 	}
+
+	// unsigned char c;
+	// printf("%zd\n", read(fd, &c, 1));
+	// printf("|%d|\n", c);
+	// printf("|%c|\n", c);
+
 	close(fd);
 	return (0);
 }

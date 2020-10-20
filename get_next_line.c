@@ -6,7 +6,7 @@
 /*   By: adeburea <adeburea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 21:53:59 by adeburea          #+#    #+#             */
-/*   Updated: 2020/10/19 01:55:25 by adeburea         ###   ########.fr       */
+/*   Updated: 2020/10/20 02:19:40 by adeburea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 static char	g_save[1024];
 
-int		get_size(void)
+int		get_size(int c)
 {
 	int i;
 
 	i = 0;
-	while (g_save[i] != '\n' && g_save[i])
+	while (g_save[i] != c && g_save[i])
 		i++;
-	if (g_save[i] == '\n')
+	if (g_save[i] == c)
 		return (i);
-	return (0);
+	return (-1);
 }
 
 void	get_sub_save(int start, int len)
@@ -41,32 +41,38 @@ void	get_sub_save(int start, int len)
 
 int		get_file(int fd)
 {
-	int	rd;
+	int rd;
 
-	while ((rd = read(fd, &g_save[ft_strlen(g_save)], BUFFER_SIZE)))
+	if (read(fd, &rd, 0) == -1)
+		return (0);
+	rd = 1;
+	while (rd > 0)
 	{
-		if (get_size() || !rd || g_save[0] == '\n')
+		rd = read(fd, &g_save[ft_strlen(g_save)], BUFFER_SIZE);
+		if (get_size('\n') != -1)
 			break ;
 	}
-	return (rd);
+	return (1);
 }
 
 int		get_next_line(int fd, char **line)
 {
-	int		rd;
 	int		len;
-	char	*ret;
+	int		ret;
+	char	*dst;
 
-	ret = NULL;
-	if (!line || BUFFER_SIZE < 1 || fd < 0 || read(fd, ret, 0) == -1)
+	ret = 1;
+	dst = NULL;
+	if (!get_file(fd) || !line || BUFFER_SIZE < 1 || fd < 0)
 		return (-1);
-	rd = get_file(fd);
-	len = !rd && g_save[0] ? ft_strlen(g_save) : get_size();
-	if (g_save[0])
-		ret = ft_strndup(g_save, len);
+	if ((len = get_size('\n')) == -1)
+	{
+		len = ft_strlen(g_save);
+		ret = 0;
+	}
+	if (g_save[0] && ret != -1)
+		dst = ft_strndup(g_save, len);
 	get_sub_save(len, ft_strlen(g_save));
-	*line = ret;
-	if (rd)
-		return (1);
-	return (0);
+	*line = dst;
+	return (ret);
 }

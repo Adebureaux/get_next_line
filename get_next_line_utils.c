@@ -6,7 +6,7 @@
 /*   By: adeburea <adeburea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 15:04:36 by adeburea          #+#    #+#             */
-/*   Updated: 2020/10/18 20:08:56 by adeburea         ###   ########.fr       */
+/*   Updated: 2020/10/19 21:59:44 by adeburea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ char	*ft_strndup(const char *s1, size_t n)
 {
 	char	*dst;
 
-	dst = malloc(++n);
-	ft_strlcpy(dst, s1, n);
+	if (!(dst = malloc(sizeof(char) * n + 1)))
+		return (NULL);
+	ft_strlcpy(dst, s1, n + 1);
 	return (dst);
 }
