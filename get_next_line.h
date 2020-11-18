@@ -6,14 +6,14 @@
 /*   By: adeburea <adeburea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 02:19:53 by adeburea          #+#    #+#             */
-/*   Updated: 2020/10/19 22:56:26 by adeburea         ###   ########.fr       */
+/*   Updated: 2020/11/18 02:40:32 by adeburea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 64
+#  define BUFFER_SIZE 9999
 # endif
 # include <unistd.h>
 # include <fcntl.h>
