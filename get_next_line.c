@@ -6,13 +6,13 @@
 /*   By: adeburea <adeburea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 21:53:59 by adeburea          #+#    #+#             */
-/*   Updated: 2020/11/22 15:09:59 by adeburea         ###   ########.fr       */
+/*   Updated: 2020/11/22 18:19:23 by adeburea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		get_size(int c, char save[])
+int		get_size(int c, char *save)
 {
 	int i;
 
@@ -24,7 +24,7 @@ int		get_size(int c, char save[])
 	return (-1);
 }
 
-void	get_sub_save(int start, char save[])
+void	get_sub_save(int start, char *save)
 {
 	int		i;
 	int		len;
@@ -39,7 +39,7 @@ void	get_sub_save(int start, char save[])
 	free(tmp);
 }
 
-int		get_file(int fd, char save[])
+int		get_file(int fd, char *save)
 {
 	int rd;
 
@@ -48,6 +48,8 @@ int		get_file(int fd, char save[])
 	rd = 1;
 	while (rd > 0 && get_size('\n', save) == -1)
 	{
+		if (!save)
+			save = realloc(save, BUFFER_SIZE);
 		rd = read(fd, &save[ft_strlen(save)], BUFFER_SIZE);
 	}
 	return (1);
@@ -55,13 +57,12 @@ int		get_file(int fd, char save[])
 
 int		get_next_line(int fd, char **line)
 {
+	static char	save[30000];
 	int			len;
 	int			ret;
 	char		*dst;
-	static char	save[30000];
 
 	ret = 1;
-	dst = NULL;
 	if (!get_file(fd, save) || !line || BUFFER_SIZE < 1 || fd < 0)
 		return (-1);
 	if ((len = get_size('\n', save)) == -1)
