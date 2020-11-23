@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adeburea <adeburea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 21:53:59 by adeburea          #+#    #+#             */
-/*   Updated: 2020/11/23 22:28:11 by adeburea         ###   ########.fr       */
+/*   Updated: 2020/11/23 22:40:20 by adeburea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int		get_size(int c, char *save)
 {
@@ -55,28 +55,28 @@ int		get_file(int fd, char *save)
 
 int		get_next_line(int fd, char **line)
 {
-	static char	save[STACK_SIZE + BUFFER_SIZE];
+	static char	save[FD_SIZE][STACK_SIZE + BUFFER_SIZE];
 	int			len;
 	int			ret;
 	char		*dst;
 
 	ret = 1;
-	if (!get_file(fd, save) || !line || BUFFER_SIZE < 1 || fd < 0)
+	if (!get_file(fd, save[fd]) || !line || BUFFER_SIZE < 1 || fd < 0)
 		return (-1);
-	if ((len = get_size('\n', save)) == -1)
+	if ((len = get_size('\n', save[fd])) == -1)
 	{
-		len = ft_strlen(save);
+		len = ft_strlen(save[fd]);
 		ret = 0;
 	}
-	if (save[0])
-		dst = ft_strndup(save, len);
+	if (save[fd][0])
+		dst = ft_strndup(save[fd], len);
 	else
 	{
 		if (!(dst = malloc(1)))
 			return (-1);
 		dst[0] = '\0';
 	}
-	get_sub_save(len, save);
+	get_sub_save(len, save[fd]);
 	*line = dst;
 	return (ret);
 }
