@@ -6,11 +6,11 @@
 /*   By: adeburea <adeburea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 15:04:36 by adeburea          #+#    #+#             */
-/*   Updated: 2020/11/23 19:02:23 by adeburea         ###   ########.fr       */
+/*   Updated: 2020/11/24 15:27:09 by adeburea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen(const char *s)
 {
