@@ -1,6 +1,6 @@
 # get_next_line
 
-This project 
+The goal of this project is to write a function that will store, in the parameter “line”, a line that has been read from the given file descriptor.
 
 ## Usage
 
